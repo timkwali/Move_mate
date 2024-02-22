@@ -92,7 +92,7 @@ fun TopSection(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Spacer(modifier = Modifier.width(15.dp))
-            Icon(imageVector = Icons.Outlined.Search, tint = MaterialTheme.colorScheme.primary, contentDescription = "search icon")
+            Icon(imageVector = Icons.Outlined.Search, tint = MaterialTheme.colorScheme.primary, contentDescription = "search icon", modifier = Modifier.size(20.dp))
             Text(
                 text = "Enter the receipt number ...",
                 modifier = Modifier
