@@ -17,7 +17,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             .background(color = screenBackground)
     ) {
         TopSection(onSearchClick = {})
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         TrackingSection(modifier = Modifier.padding(horizontal = 20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
+        AvailableVehiclesSection(vehicles = vehiclesList)
     }
 }
