@@ -30,7 +30,7 @@ val Typography = Typography(
     ),
     labelSmall = TextStyle(
         fontFamily = linikSans,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Light,
         fontSize = 11.sp,
     )
 )

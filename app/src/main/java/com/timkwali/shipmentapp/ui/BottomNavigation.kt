@@ -4,14 +4,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.timkwali.shipmentapp.BottomBarScreen
@@ -39,9 +43,15 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavHostController) {
             val fontWeight =  if(isSelected) FontWeight.Bold else FontWeight.Normal
 
             NavigationBarItem(
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.surface
+                ),
                 selected = isSelected,
                 onClick = {
-                    navController.navigate(item.route)
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
                 },
                 icon = {
                     Icon(painter = painterResource(id = item.icon), contentDescription = "", tint = tintColor)
