@@ -21,7 +21,7 @@ fun BottomNavGraph(navController: NavHostController){
         }
 
         composable(route = BottomBarScreen.Shipment.route) {
-            ShipmentScreen()
+            ShipmentScreen(navController = navController)
         }
     }
 }

@@ -35,7 +35,7 @@ fun TrackingItem(
     address: String,
     duration: String
 ) {
-    val color = if(trackingType == TrackingType.SENDER) orange.copy(alpha = 0.5f) else Color.Green.copy(alpha = 0.5f)
+    val color = if(trackingType == TrackingType.SENDER) orange.copy(alpha = 0.4f) else Color.Green.copy(alpha = 0.4f)
     val type = if(trackingType == TrackingType.SENDER) "Sender" else "Receiver"
     val detail = if(trackingType == TrackingType.SENDER) "Time" else "Status"
     val box = if(trackingType == TrackingType.SENDER) R.drawable.up_arrow_box else R.drawable.down_arrow_box

@@ -33,7 +33,8 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavHostController) {
 
 
     NavigationBar(
-        modifier = modifier
+        modifier = modifier,
+        containerColor = Color.White
     ) {
         screens.forEachIndexed{ index, item ->
             val isSelected = currentDestination?.hierarchy?.any{
@@ -44,7 +45,7 @@ fun BottomNav(modifier: Modifier = Modifier, navController: NavHostController) {
 
             NavigationBarItem(
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = MaterialTheme.colorScheme.surface
+                    indicatorColor = Color.White
                 ),
                 selected = isSelected,
                 onClick = {
