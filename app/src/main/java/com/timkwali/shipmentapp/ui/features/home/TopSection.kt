@@ -40,6 +40,7 @@ import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.ShipmentAppTheme
 import com.timkwali.shipmentapp.ui.theme.orange
 import com.timkwali.shipmentapp.ui.theme.transparent
+import com.timkwali.shipmentapp.ui.utils.noRippleClickable
 
 @Composable
 fun TopSection(
@@ -109,7 +110,7 @@ fun TopSection(
                 .fillMaxWidth()
                 .height(50.dp)
                 .clip(RoundedCornerShape(30.dp))
-                .clickable { onSearchClick() },
+                .noRippleClickable { onSearchClick() },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Spacer(modifier = Modifier.width(15.dp))
