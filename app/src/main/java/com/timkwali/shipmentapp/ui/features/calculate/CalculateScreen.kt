@@ -21,6 +21,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -39,16 +44,24 @@ fun CalculateScreen(
     viewModel: CalculateViewModel = viewModel(),
     navController: NavController
 ) {
+    var animateTopBar by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TitledAppBar(
                 title = "Calculate",
                 onBackClick = {
                     navController.popBackStack()
-                })
+                },
+                animateTopBar = animateTopBar
+            )
         }
     ) { paddingValues ->
         CalculateBody(paddingValues = paddingValues, viewModel = viewModel, navController)
+    }
+
+    LaunchedEffect(key1 = "") {
+        animateTopBar = true
     }
 }
 

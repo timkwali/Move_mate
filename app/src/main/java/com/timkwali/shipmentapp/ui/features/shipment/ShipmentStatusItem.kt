@@ -32,7 +32,7 @@ import com.timkwali.shipmentapp.ui.theme.LightGrey
 fun ShipmentStatusItem(item: ShipmentStatus) {
     Column(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(vertical = 8.dp, horizontal = 16.dp)
             .shadow(elevation = 2.dp, shape = RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(12.dp))
             .background(color = Color.White)

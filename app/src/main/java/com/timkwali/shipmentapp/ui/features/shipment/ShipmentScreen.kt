@@ -1,11 +1,14 @@
 package com.timkwali.shipmentapp.ui.features.shipment
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +44,8 @@ import androidx.navigation.NavHostController
 import com.timkwali.shipmentapp.TitledAppBar
 import com.timkwali.shipmentapp.ui.theme.NavyBlue
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
+import com.timkwali.shipmentapp.ui.utils.ShipmentListAnimatedVisibility
+import kotlinx.coroutines.delay
 
 @Composable
 fun ShipmentScreen(
@@ -48,14 +53,22 @@ fun ShipmentScreen(
     navController: NavHostController,
     viewModel: ShipmentViewModel = viewModel()
 ) {
+    var animateTopBar by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TitledAppBar(
                 title = "Shipment history",
-                onBackClick = { navController.popBackStack() })
+                onBackClick = { navController.popBackStack() },
+                animateTopBar = animateTopBar
+            )
         }
     ) { paddingValues ->
         ShipmentList(paddingValues, viewModel)
+    }
+
+    LaunchedEffect(key1 = "") {
+        animateTopBar = true
     }
 }
 
@@ -68,13 +81,7 @@ fun ShipmentList(
 
     var isContentVisible by remember { mutableStateOf(false) }
     var isCustomRowVisible by remember { mutableStateOf(false) }
-
-
-    LaunchedEffect("") {
-        isContentVisible = true
-        isCustomRowVisible = true
-    }
-
+    var isWholeContentVisible by remember { mutableStateOf(false) }
 
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -86,6 +93,19 @@ fun ShipmentList(
         mutableIntStateOf(0)
     }
 
+
+    LaunchedEffect("") {
+//        isContentVisible = true
+        isCustomRowVisible = true
+        isWholeContentVisible = true
+    }
+
+    LaunchedEffect(key1 = selectedId.intValue ) {
+        isContentVisible = false
+        delay(100)
+        isContentVisible = true
+    }
+
     Column(
         Modifier.padding(
             bottom = paddingValues.calculateBottomPadding(),
@@ -93,24 +113,43 @@ fun ShipmentList(
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .background(color = MaterialTheme.colorScheme.primary)
         ) {
             AnimatedVisibility(
                 visible = isCustomRowVisible,
                 enter = slideInHorizontally(
                     initialOffsetX = { w -> w },
-                    animationSpec = tween(durationMillis = 2000)
+                    animationSpec = tween(durationMillis = 500)
                 ) + fadeIn(
-                    tween(2000),
+                    tween(500),
                 ),
-                exit = slideOutHorizontally(tween(durationMillis = 2000)) + fadeOut(tween(2000))
+                exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
             ) {
                 CustomTabRow(selectedId)
             }
         }
 
-        ContentAnimatedVisibility(visibility = isContentVisible) {
+//        AnimatedVisibility(
+//            visible = isWholeContentVisible,
+//            enter = slideInVertically(
+//                initialOffsetY = { fullHeight -> fullHeight },
+//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+//            ) + fadeIn(
+//                initialAlpha = 0f,
+//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+//            ),
+//            exit =
+//            slideOutVertically(
+//                targetOffsetY = { fullWidth -> fullWidth },
+//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+//            ) + fadeOut(
+//                targetAlpha = 0f,
+//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+//            ),
+//        ) {
+        ContentAnimatedVisibility(visibility = isWholeContentVisible) {
             HorizontalPager(
                 state = pagerState,
                 userScrollEnabled = false,
@@ -119,26 +158,28 @@ fun ShipmentList(
                     .fillMaxSize()
                     .align(Alignment.Start)
             ) {
-                LazyColumn(
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier
-                        .padding(16.dp),
-
-                    ) {
+                LazyColumn(modifier = Modifier.padding(top = 16.dp)) {
                     item {
                         Text(
+                            modifier = Modifier.padding(horizontal = 20.dp),
                             text = "Shipments",
                             fontSize = 24.sp,
                             color = NavyBlue,
                             fontWeight = FontWeight.Bold
                         )
-                        Spacer(Modifier.size(8.dp))
+
+                        Spacer(Modifier.size(5.dp))
                     }
                     items(viewModel.getUpdatedStatusLabelList(selectedId.intValue)) { item ->
-                        ShipmentStatusItem(item)
+                        ShipmentListAnimatedVisibility(visibility = isContentVisible) {
+                            ShipmentStatusItem(item)
+                        }
                     }
                 }
             }
         }
+//        }
     }
 }
+
+

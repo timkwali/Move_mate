@@ -1,5 +1,13 @@
 package com.timkwali.shipmentapp
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -14,23 +22,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.timkwali.shipmentapp.ui.features.shipment.CustomTabRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TitledAppBar(title: String, onBackClick: ()-> Unit) {
+fun TitledAppBar(
+    title: String,
+    animateTopBar: Boolean,
+    onBackClick: ()-> Unit
+) {
     CenterAlignedTopAppBar(title = {
-        Text(
-            text = title,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }, navigationIcon = {
-        IconButton(onClick = onBackClick) {
-            Icon(
-                Icons.Rounded.KeyboardArrowLeft,
-                contentDescription = "Go home"
+        AnimatedVisibility(
+            visible = animateTopBar,
+            enter = slideInVertically(
+                initialOffsetY = { h -> h },
+                animationSpec = tween(durationMillis = 500)
+            ) + fadeIn(
+                tween(500),
+            ),
+            exit = slideOutVertically(tween(durationMillis = 500)) + fadeOut(tween(500))
+        ) {
+            Text(
+                text = title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
             )
         }
+    }, navigationIcon = {
+        AnimatedVisibility(
+            visible = animateTopBar,
+            enter = slideInHorizontally(
+                initialOffsetX = { w -> -w },
+                animationSpec = tween(durationMillis = 500)
+            ) + fadeIn(
+                tween(500),
+            ),
+            exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    Icons.Rounded.KeyboardArrowLeft,
+                    contentDescription = "Go home"
+                )
+            }
+        }
+
     }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
         containerColor = MaterialTheme.colorScheme.primary,
         navigationIconContentColor = Color.White,
@@ -42,7 +78,7 @@ fun TitledAppBar(title: String, onBackClick: ()-> Unit) {
 @Composable
 @Preview
 fun TitledAppBarPreview() {
-    TitledAppBar(title = "HomeScreen") {
-        
+    TitledAppBar(title = "HomeScreen", animateTopBar = true, ) {
+
     }
 }
