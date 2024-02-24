@@ -26,7 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.timkwali.shipmentapp.TitledAppBar
@@ -44,7 +43,9 @@ fun CalculateScreen(
         topBar = {
             TitledAppBar(
                 title = "Calculate",
-                onBackClick = { navController.popBackStack() })
+                onBackClick = {
+                    navController.popBackStack()
+                })
         }
     ) { paddingValues ->
         CalculateBody(paddingValues = paddingValues, viewModel = viewModel, navController)

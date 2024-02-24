@@ -48,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -141,10 +142,10 @@ private fun AppBar(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_scanner),
+                        painter = painterResource(id = R.drawable.ic_flip),
                         contentDescription = "Scanner",
                         tint = Color.White,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp).rotate(90f)
                     )
                 }
             }

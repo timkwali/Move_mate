@@ -93,9 +93,3 @@ fun ShipmentStatusItem(item: ShipmentStatus) {
         }
     }
 }
-
-@Composable
-@Preview
-fun ShipmentStatusItemPreview(){
-//    ShipmentStatusItem(item = ShipmentStatus())
-}

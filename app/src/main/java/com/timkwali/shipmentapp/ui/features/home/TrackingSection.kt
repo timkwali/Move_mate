@@ -92,7 +92,8 @@ fun TrackingSection(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     Icons.Rounded.Add,
@@ -100,7 +101,6 @@ fun TrackingSection(modifier: Modifier = Modifier) {
                     tint = orange
                 )
                 Text(text = "Add Stop",
-                    textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge.copy(color = orange, fontWeight = FontWeight.Bold)
                 )
             }
