@@ -21,7 +21,10 @@ class SearchViewModel : ViewModel() {
             .combine(itemList) { searchQuery, items->
                 when {
                     searchQuery.isNotEmpty() -> items.filter { movie ->
-                        movie.name.contains(searchQuery, ignoreCase = true)
+                        movie.name.contains(searchQuery, ignoreCase = true) ||
+                                movie.id.contains(searchQuery, ignoreCase = true) ||
+                                movie.origin.contains(searchQuery, ignoreCase = true) ||
+                                movie.destination.contains(searchQuery, ignoreCase = true)
                     }
                     else -> itemList.first()
                 }
