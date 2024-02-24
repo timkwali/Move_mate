@@ -1,5 +1,6 @@
 package com.timkwali.shipmentapp.ui.features.home
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,16 +28,25 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.ShipmentAppTheme
 import com.timkwali.shipmentapp.ui.theme.orange
@@ -77,6 +88,7 @@ fun TopSection(
                             tint = Color.White.copy(alpha = 0.6f),
                             modifier = Modifier.size(16.dp)
                         )
+                        Spacer(modifier = Modifier.width(2.dp))
                         Text(text = "Your location", style = MaterialTheme.typography.labelSmall.copy(color = Color.White.copy(alpha = 0.6f), fontSize = 14.sp))
                     }
 
@@ -103,37 +115,92 @@ fun TopSection(
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-
-        Row(
-            modifier = Modifier
-                .background(color = Color.White, shape = RoundedCornerShape(30.dp))
-                .fillMaxWidth()
-                .height(50.dp)
-                .clip(RoundedCornerShape(30.dp))
-                .noRippleClickable { onSearchClick() },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Spacer(modifier = Modifier.width(15.dp))
-            Icon(imageVector = Icons.Outlined.Search, tint = MaterialTheme.colorScheme.primary, contentDescription = "search icon", modifier = Modifier.size(20.dp))
-            Text(
-                text = "Enter the receipt number ...",
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .weight(1f)
-                    .background(color = transparent),
-                style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp)
-            )
-            Box(modifier = Modifier
-                .background(orange, shape = CircleShape)
-                .size(40.dp)
-                .clip(CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(painter = painterResource(id = R.drawable.ic_flip), contentDescription = "flip", tint = Color.White, modifier = Modifier.rotate(90f))
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-        }
+        SearchArea { onSearchClick() }
     }
+}
+
+@Composable
+fun SearchArea(onSearchClick: () -> Unit) {
+//    Row(
+//        modifier = Modifier
+//            .background(color = Color.White, shape = RoundedCornerShape(30.dp))
+//            .fillMaxWidth()
+//            .height(56.dp)
+//            .clip(RoundedCornerShape(30.dp))
+//            .noRippleClickable { onSearchClick() },
+//        verticalAlignment = Alignment.CenterVertically,
+//    ) {
+//        Spacer(modifier = Modifier.width(15.dp))
+////        Icon(imageVector = Icons.Outlined.Search, tint = MaterialTheme.colorScheme.primary, contentDescription = "search icon", modifier = Modifier.size(20.dp))
+//        Icon(Icons.Outlined.Search, contentDescription = "Search")
+//        Text(
+//            text = "Enter the receipt number ...",
+//            modifier = Modifier
+//                .padding(start = 10.dp)
+//                .weight(1f)
+//                .background(color = transparent),
+//            style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp)
+//        )
+//        Box(modifier = Modifier
+//            .background(orange, shape = CircleShape)
+//            .size(40.dp)
+//            .clip(CircleShape),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Icon(painter = painterResource(id = R.drawable.ic_flip), contentDescription = "flip", tint = Color.White, modifier = Modifier.rotate(90f))
+//        }
+//        Spacer(modifier = Modifier.width(5.dp))
+        TextField(
+            enabled = false,
+            value = "", onValueChange = {},
+            placeholder = {
+                Text(
+                    text = "Enter the receipt number ...",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                        .background(color = transparent),
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp),
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .clip(RoundedCornerShape(48.dp))
+                .focusRequester(remember { FocusRequester() })
+                .noRippleClickable { onSearchClick() },
+            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search", tint = MaterialTheme.colorScheme.primary) },
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                disabledContainerColor = Color.White,
+                focusedPlaceholderColor = Color.Gray.copy(0.8f),
+                unfocusedPlaceholderColor = Color.Gray.copy(0.8f),
+            ),
+            trailingIcon = {
+                Box(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clip(CircleShape)
+                        .background(orange)
+                        .size(40.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_flip),
+                        contentDescription = "Scanner",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .rotate(90f)
+                    )
+                }
+            }
+        )
+//    }
 }
 
 @Preview

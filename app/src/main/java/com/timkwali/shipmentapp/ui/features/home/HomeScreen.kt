@@ -1,5 +1,6 @@
 package com.timkwali.shipmentapp.ui.features.home
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.timkwali.shipmentapp.BottomBarScreen
 import com.timkwali.shipmentapp.ui.theme.DirtyWhite
@@ -36,9 +38,36 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
             isAppBarVisible = !isAppBarVisible
         }
 
-        AppBarAnimatedVisibility(visibility = isAppBarVisible) {
-            TopSection(onSearchClick = {navController.navigate(BottomBarScreen.Search.route)})
+        var containerState by remember { mutableStateOf(ContainerState.SEARCH) }
+        AnimatedContent(
+            modifier = modifier,
+            targetState = containerState,
+            label = "container transform",
+        ) { state ->
+            when (state) {
+                ContainerState.SEARCH -> AppBarAnimatedVisibility(visibility = isAppBarVisible) {
+                    TopSection(
+                        onSearchClick = {
+                            containerState = ContainerState.HOME
+                            navController.navigate(BottomBarScreen.Search.route)
+                         }
+                    )
+                }
+                ContainerState.HOME -> SearchScreen(
+                    navController = navController,
+                    onBack = {
+                        containerState = ContainerState.SEARCH
+//                        navController.popBackStack()
+                    }
+                )
+            }
         }
+
+//        AppBarAnimatedVisibility(visibility = isAppBarVisible) {
+//            TopSection(
+//                onSearchClick = { navController.navigate(BottomBarScreen.Search.route) }
+//            )
+//        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -62,4 +91,8 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
             isListVisible = true
         }
     }
+}
+
+enum class ContainerState {
+    HOME, SEARCH
 }

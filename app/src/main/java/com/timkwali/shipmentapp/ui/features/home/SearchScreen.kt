@@ -3,10 +3,13 @@ package com.timkwali.shipmentapp.ui.features.home
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,8 +24,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,6 +61,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -65,21 +71,33 @@ import com.timkwali.shipmentapp.ui.theme.NavyBlue
 import com.timkwali.shipmentapp.ui.theme.orange
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.timkwali.shipmentapp.ui.theme.transparent
 
 @Composable
-fun SearchScreen(viewModel: SearchViewModel = viewModel(), navController: NavController) {
+fun SearchScreen(
+    viewModel: SearchViewModel = viewModel(),
+    navController: NavController,
+    containerState: ContainerState = ContainerState.HOME,
+    onBack: () -> Unit,
+) {
     var isContentVisible by remember { mutableStateOf(false) }
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
+    var animateTopBar by remember { mutableStateOf(false) }
 
     LaunchedEffect("") {
         isContentVisible = true
+        animateTopBar = true
     }
     Scaffold(
         topBar = {
             AppBar(
                 searchQuery = viewModel.searchQuery,
                 onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
-                onClick = { navController.popBackStack() }
+                onClick = {
+                    onBack()
+                    navController.popBackStack()
+                },
+                animateTopBar = animateTopBar
             )
         },
     ) { paddingValues ->
@@ -94,62 +112,104 @@ private fun AppBar(
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
     onClick: () -> Unit,
+    animateTopBar: Boolean
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(end = 12.dp, top = 16.dp, bottom = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    var animateAppBar by remember { mutableStateOf(false) }
+    val appBarHeight: Dp by animateDpAsState(
+        targetValue = if (animateAppBar) 55.dp else 185.dp,
+        animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "appBarHeight"
+    )
+    val searchBarPosition by animateDpAsState(
+        targetValue = if(animateAppBar) 0.dp else 65.dp,
+        animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "searchBarPosition"
+    )
+    val searchBaraddingStart by animateDpAsState(
+        targetValue = if(animateAppBar) 10.dp else 20.dp,
+        animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "paddingStart"
+    )
 
-        ) {
-        IconButton(onClick = onClick, modifier = Modifier.size(36.dp)) {
-            Icon(Icons.Default.KeyboardArrowLeft, tint = Color.White, contentDescription = null)
-        }
-        TextField(
-            value = searchQuery, onValueChange = onSearchQueryChange,
-            placeholder = {
-                Text(
-                    text = "Enter the receipt number...",
-                    overflow = TextOverflow.Ellipsis
-                )
-            },
+    LaunchedEffect(key1 = "") {
+        animateAppBar = true
+    }
+    Column {
+        Row(
             modifier = Modifier
-                .padding(end = 8.dp)
                 .fillMaxWidth()
-                .height(56.dp)
-                .clip(RoundedCornerShape(48.dp))
-                .focusRequester(remember { FocusRequester() })
-                .clickable { },
-            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") },
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                disabledContainerColor = Color.White,
-                focusedPlaceholderColor = Color.Gray.copy(0.8f),
-                unfocusedPlaceholderColor = Color.Gray.copy(0.8f),
-            ),
-            trailingIcon = {
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clip(CircleShape)
-                        .background(orange)
-                        .size(40.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_flip),
-                        contentDescription = "Scanner",
-                        tint = Color.White,
-                        modifier = Modifier.size(20.dp).rotate(90f)
-                    )
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(end = 12.dp, top = 16.dp, bottom = 20.dp)
+                .height(appBarHeight),
+            verticalAlignment = Alignment.CenterVertically,
+
+            ) {
+            androidx.compose.animation.AnimatedVisibility(
+                visible = animateTopBar,
+                enter = slideInHorizontally(
+                    initialOffsetX = { w -> -w },
+                    animationSpec = tween(durationMillis = 500)
+                ) + fadeIn(
+                    tween(500),
+                ),
+                exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
+            ) {
+                IconButton(onClick = onClick, modifier = Modifier.size(36.dp)) {
+                    Icon(Icons.Default.KeyboardArrowLeft, tint = Color.White, contentDescription = null)
                 }
             }
-        )
+
+            TextField(
+                value = searchQuery, onValueChange = onSearchQueryChange,
+                placeholder = {
+                    Text(
+                        text = "Enter the receipt number ...",
+                        modifier = Modifier
+                            .padding(start = 10.dp)
+                            .weight(1f)
+                            .background(color = transparent),
+                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp),
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                modifier = Modifier
+                    .padding(end = 8.dp, start = searchBaraddingStart)
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .offset(y = searchBarPosition)
+                    .clip(RoundedCornerShape(48.dp))
+                    .focusRequester(remember { FocusRequester() })
+                    .clickable { },
+                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    disabledContainerColor = Color.White,
+                    focusedPlaceholderColor = Color.Gray.copy(0.8f),
+                    unfocusedPlaceholderColor = Color.Gray.copy(0.8f),
+                ),
+                trailingIcon = {
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clip(CircleShape)
+                            .background(orange)
+                            .size(40.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_flip),
+                            contentDescription = "Scanner",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .rotate(90f)
+                        )
+                    }
+                }
+            )
+        }
+        Spacer(modifier = Modifier.width(5.dp))
     }
 }
 

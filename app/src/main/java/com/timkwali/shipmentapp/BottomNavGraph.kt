@@ -32,7 +32,7 @@ fun BottomNavGraph(navController: NavHostController, showBottomBar: (state: Bool
         }
 
         composable(route = BottomBarScreen.Search.route) {
-            SearchScreen(navController = navController)
+            SearchScreen(navController = navController, onBack = {  })
             showBottomBar(false)
         }
 
