@@ -20,7 +20,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.ui.theme.NavyBlue
 import com.timkwali.shipmentapp.ui.utils.bounceClick
 
@@ -46,7 +48,11 @@ fun FilterChipGroup(
                     selectedItemIndex = index
                     onSelectedChanged(index)
                 },
-                label = { Text(item, color = if (isSelected) Color.White else NavyBlue) },
+                label = { Text(item, color = if (isSelected) Color.White else NavyBlue,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.W600, fontSize = 16.sp
+                    )
+                ) },
                 leadingIcon = if (isSelected) {
                     {
                         Icon(

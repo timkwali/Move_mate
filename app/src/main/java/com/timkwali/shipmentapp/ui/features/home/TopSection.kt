@@ -72,7 +72,7 @@ fun TopSection(
                 Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(40.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            Icons.Default.LocationOn,
+                            painter = painterResource(id = R.drawable.ic_location),
                             contentDescription = "location",
                             tint = Color.White.copy(alpha = 0.6f),
                             modifier = Modifier.size(16.dp)

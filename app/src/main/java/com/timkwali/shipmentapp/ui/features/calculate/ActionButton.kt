@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +20,11 @@ import com.timkwali.shipmentapp.ui.utils.bounceClick
 import com.timkwali.shipmentapp.ui.utils.noRippleClick
 
 @Composable
-fun ColumnScope.ActionButton(text: String, onClick: () -> Unit) {
+fun ColumnScope.ActionButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Button(
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.White,
@@ -27,7 +32,7 @@ fun ColumnScope.ActionButton(text: String, onClick: () -> Unit) {
         ),
         onClick = onClick,
         shape = RoundedCornerShape(36.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
             .align(Alignment.End)
@@ -35,7 +40,7 @@ fun ColumnScope.ActionButton(text: String, onClick: () -> Unit) {
             .noRippleClick { onClick() }
             .bounceClick(),
     ) {
-        Text(text = text, fontSize = 18.sp)
+        Text(text = text, fontSize = 18.sp, style = MaterialTheme.typography.bodyLarge)
     }
 
 }

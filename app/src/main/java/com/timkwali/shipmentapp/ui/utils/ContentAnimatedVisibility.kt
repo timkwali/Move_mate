@@ -18,7 +18,7 @@ fun ContentAnimatedVisibility(
     AnimatedVisibility(
         visible = visibility,
         enter = slideInVertically(
-            initialOffsetY = { fullHeight -> fullHeight },
+            initialOffsetY = { fullHeight -> fullHeight},
             animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing)
         ) + fadeIn(
             initialAlpha = 0f,

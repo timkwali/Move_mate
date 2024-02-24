@@ -18,17 +18,17 @@ fun BottomBarAnimatedVisibility(
         visible = visibility,
         enter = slideInVertically(
             initialOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 1500, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 2000, easing = LinearOutSlowInEasing)
         ) + fadeIn(
             initialAlpha = 0f,
-            animationSpec = tween(durationMillis = 1500, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 2000, easing = LinearOutSlowInEasing)
         ),
         exit = slideOutVertically(
             targetOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 1500, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 2000, easing = LinearOutSlowInEasing)
         ) + fadeOut(
             targetAlpha = 0f,
-            animationSpec = tween(durationMillis = 1500, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 2000, easing = LinearOutSlowInEasing)
         ),
     ) {
         content()

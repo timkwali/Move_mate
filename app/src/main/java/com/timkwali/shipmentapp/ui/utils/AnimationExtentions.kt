@@ -1,6 +1,8 @@
 package com.timkwali.shipmentapp.ui.utils
 
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -17,8 +19,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 enum class ButtonState { Pressed, Idle }
 fun Modifier.bounceClick() = composed {
     var buttonState by remember { mutableStateOf(ButtonState.Idle) }
-    val scale by animateFloatAsState(if (buttonState == ButtonState.Pressed) 0.90f else 1f,
-        label = ""
+    val scale by animateFloatAsState(
+        targetValue = if (buttonState == ButtonState.Pressed) 0.50f else 1f,
+        label = "",
+        animationSpec = tween(durationMillis = 700, easing = LinearOutSlowInEasing)
     )
 
     this

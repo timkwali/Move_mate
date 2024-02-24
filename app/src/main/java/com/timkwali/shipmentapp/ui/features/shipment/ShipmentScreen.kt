@@ -131,24 +131,6 @@ fun ShipmentList(
             }
         }
 
-//        AnimatedVisibility(
-//            visible = isWholeContentVisible,
-//            enter = slideInVertically(
-//                initialOffsetY = { fullHeight -> fullHeight },
-//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
-//            ) + fadeIn(
-//                initialAlpha = 0f,
-//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
-//            ),
-//            exit =
-//            slideOutVertically(
-//                targetOffsetY = { fullWidth -> fullWidth },
-//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
-//            ) + fadeOut(
-//                targetAlpha = 0f,
-//                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
-//            ),
-//        ) {
         ContentAnimatedVisibility(visibility = isWholeContentVisible) {
             HorizontalPager(
                 state = pagerState,
@@ -178,7 +160,6 @@ fun ShipmentList(
                 }
             }
         }
-//        }
     }
 }
 

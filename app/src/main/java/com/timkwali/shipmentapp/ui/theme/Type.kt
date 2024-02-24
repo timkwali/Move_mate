@@ -32,5 +32,10 @@ val Typography = Typography(
         fontFamily = linikSans,
         fontWeight = FontWeight.Light,
         fontSize = 11.sp,
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = linikSans,
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp
     )
 )
