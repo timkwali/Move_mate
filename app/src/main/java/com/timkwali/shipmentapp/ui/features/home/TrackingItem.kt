@@ -40,7 +40,10 @@ fun TrackingItem(
     val detail = if(trackingType == TrackingType.SENDER) "Time" else "Status"
     val box = if(trackingType == TrackingType.SENDER) R.drawable.up_arrow_box else R.drawable.down_arrow_box
 
-    Row(modifier = modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Box(modifier = Modifier
             .background(color, shape = CircleShape)
             .size(40.dp)
@@ -50,18 +53,32 @@ fun TrackingItem(
             Image(painter = painterResource(id = box), contentDescription = "flip icon", modifier = Modifier.size(30.dp))
         }
         Spacer(modifier = Modifier.width(10.dp))
-        Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-            .height(40.dp)
-            .weight(1f)) {
-            Text(text = type, style = MaterialTheme.typography.labelSmall.copy(color = Color.Black.copy(alpha = 0.6f), fontSize = 14.sp))
-            Text(text = address, style = MaterialTheme.typography.labelSmall.copy(color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.W500))
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .height(35.dp)
+                .weight(1f)
+        ) {
+            Text(text = type, style = MaterialTheme.typography.bodyLarge.copy(color = Color.Black.copy(alpha = 0.6f)))
+            Text(text = address, style = MaterialTheme.typography.titleMedium.copy(color = Color.Black))
         }
         Spacer(modifier = Modifier.width(10.dp))
         Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-            .height(40.dp)
+            .height(35.dp)
             .weight(1f)) {
-            Text(text = detail, style = MaterialTheme.typography.labelSmall.copy(color = Color.Black.copy(alpha = 0.6f), fontSize = 14.sp))
-            Text(text = duration, style = MaterialTheme.typography.labelSmall.copy(color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.W500))
+            Text(text = detail, style = MaterialTheme.typography.bodyLarge.copy(color = Color.Black.copy(alpha = 0.6f)))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if(trackingType == TrackingType.SENDER) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .clip(shape = CircleShape)
+                            .background(color = Color(0xFF4aca2d)),
+                    )
+                }
+                Spacer(modifier = Modifier.size(4.dp))
+                Text(text = duration, style = MaterialTheme.typography.titleMedium.copy(color = Color.Black))
+            }
         }
     }
 }

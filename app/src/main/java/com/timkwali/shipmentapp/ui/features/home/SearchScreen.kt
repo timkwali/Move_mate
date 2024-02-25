@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -41,6 +42,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -73,6 +75,8 @@ import com.timkwali.shipmentapp.ui.theme.NavyBlue
 import com.timkwali.shipmentapp.ui.theme.orange
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.timkwali.shipmentapp.ui.theme.DirtyWhite
+import com.timkwali.shipmentapp.ui.theme.grey
 import com.timkwali.shipmentapp.ui.theme.transparent
 
 @Composable
@@ -81,6 +85,7 @@ fun SearchScreen(
     navController: NavController,
     containerState: ContainerState = ContainerState.HOME,
     onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var isContentVisible by remember { mutableStateOf(false) }
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
@@ -91,6 +96,9 @@ fun SearchScreen(
         animateTopBar = true
     }
     Scaffold(
+        modifier = modifier
+            .fillMaxSize()
+            .background(DirtyWhite),
         topBar = {
             AppBar(
                 searchQuery = viewModel.searchQuery,
@@ -164,10 +172,9 @@ private fun AppBar(
                     Text(
                         text = "Enter the receipt number ...",
                         modifier = Modifier
-                            .padding(start = 10.dp)
                             .weight(1f)
                             .background(color = transparent),
-                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp),
+                        style = MaterialTheme.typography.titleMedium.copy(color = grey),
                         overflow = TextOverflow.Ellipsis
                     )
                 },
@@ -189,6 +196,7 @@ private fun AppBar(
                     disabledContainerColor = Color.White,
                     focusedPlaceholderColor = Color.Gray.copy(0.8f),
                     unfocusedPlaceholderColor = Color.Gray.copy(0.8f),
+                    focusedTextColor = Color.Gray.copy(alpha = 0.8f),
                 ),
                 trailingIcon = {
                     Box(
@@ -278,13 +286,14 @@ fun ListItem(
 ) {
     Row(
         horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
     ) {
         Box(
             modifier = Modifier
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary)
-                .size(48.dp),
+                .size(35.dp),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -297,15 +306,18 @@ fun ListItem(
         // Column with a text and a row with a text, a ball point and another text
         // forward arrow and another text
         Column {
-            Text(text = item.name, fontSize = 18.sp, color = NavyBlue, fontWeight = FontWeight.Bold)
+            Text(text = item.name, color = NavyBlue, style = typography.titleLarge)
             Spacer(modifier = Modifier.size(4.dp))
-            FlowRow(verticalArrangement = Arrangement.Bottom) {
-                Text(text = item.id, fontSize = 12.sp, color = Color.Gray)
+            FlowRow(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.Top
+            ) {
+                Text(text = item.id, color = Color.Gray, style = typography.bodyLarge)
                 // Ball point here
                 Spacer(modifier = Modifier.size(6.dp))
-                BallPoint(Color.Gray)
+                BallPoint(color = Color.Gray, modifier = Modifier.padding(top = 5.dp))
                 Spacer(modifier = Modifier.size(6.dp))
-                Text(text = item.origin, fontSize = 12.sp, color = Color.Gray)
+                Text(text = item.origin, color = Color.Gray, style = typography.bodyLarge)
                 Spacer(modifier = Modifier.size(6.dp))
                 Icon(
                     Icons.Default.ArrowForward,
@@ -314,7 +326,7 @@ fun ListItem(
                     contentDescription = ""
                 )
                 Spacer(modifier = Modifier.size(6.dp))
-                Text(text = item.destination, fontSize = 12.sp, color = Color.Gray)
+                Text(text = item.destination, color = Color.Gray, style = typography.bodyLarge)
             }
         }
     }

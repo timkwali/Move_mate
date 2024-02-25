@@ -21,7 +21,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +46,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.R
+import com.timkwali.shipmentapp.ui.theme.grey
 import com.timkwali.shipmentapp.ui.utils.AnimatedVisibility
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
 import com.timkwali.shipmentapp.ui.utils.VehicleCardVisibility
@@ -71,7 +75,7 @@ fun AvailableVehiclesSection(
         modifier = modifier
     ) {
         ContentAnimatedVisibility(isAvailableVehiclesVisible) {
-            Text(modifier = Modifier.padding(start = 20.dp), text = "Available Vehicles", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
+            Text(modifier = Modifier.padding(start = 20.dp), text = "Available vehicles", style = MaterialTheme.typography.displayLarge)
         }
         Spacer(modifier = Modifier.height(10.dp))
         LazyRow(
@@ -102,31 +106,32 @@ fun FreightItem(
     image: Int,
     isListVisible: Boolean,
 ) {
-        Column(
-            modifier = modifier
+    Column(
+        modifier = modifier
+            .width(140.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+    ) {
+        Text(modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp), text = name, style = MaterialTheme.typography.titleMedium.copy(color = Color.Black, fontWeight = FontWeight.W600), overflow = TextOverflow.Ellipsis, maxLines = 1)
+        Text(modifier = Modifier.padding(horizontal = 10.dp), text = status, style = MaterialTheme.typography.labelSmall.copy(color = grey, fontSize = 16.sp), overflow = TextOverflow.Ellipsis, maxLines = 1)
+        Box(
+            Modifier
+                .height(150.dp)
                 .width(150.dp)
-                .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+                .clipToBounds()
         ) {
-            Text(modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp), text = name, style = MaterialTheme.typography.labelSmall.copy(color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.W500), overflow = TextOverflow.Ellipsis, maxLines = 1)
-            Text(modifier = Modifier.padding(horizontal = 10.dp), text = status, style = MaterialTheme.typography.labelSmall.copy(color = Color.Black.copy(alpha = 0.6f), fontSize = 14.sp), overflow = TextOverflow.Ellipsis, maxLines = 1)
-            Box(
-                Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-                    .clipToBounds()
-            ) {
-                AnimatedVisibility(isListVisible = isListVisible) {
-                    Image(
-                        painter = painterResource(id = image),
-                        contentDescription = "freight image",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .offset(x = 40.dp)
-                            .scale(1.5f)
-                    )
-                }
+            AnimatedVisibility(isListVisible = isListVisible) {
+                Image(
+                    painter = painterResource(id = image),
+                    contentDescription = "freight image",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .offset(x = 40.dp)
+                        .scale(1.2f)
+                )
             }
         }
+    }
 }
 
 @Composable
@@ -142,8 +147,8 @@ data class Vehicle(
 )
 
 val vehiclesList = listOf(
-    Vehicle("Ocean Freight", "International", R.drawable.ship),
-    Vehicle("Cargo Freight", "Reliable", R.drawable.truck),
-    Vehicle("Air Freight", "International", R.drawable.plane),
-    Vehicle("Rail Freight", "Reliable", R.drawable.train),
+    Vehicle("Ocean freight", "International", R.drawable.ship),
+    Vehicle("Cargo freight", "Reliable", R.drawable.truck),
+    Vehicle("Air freight", "International", R.drawable.plane),
+    Vehicle("Rail freight", "Reliable", R.drawable.train),
 )

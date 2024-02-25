@@ -39,8 +39,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.ShipmentAppTheme
+import com.timkwali.shipmentapp.ui.theme.grey
 import com.timkwali.shipmentapp.ui.theme.orange
 import com.timkwali.shipmentapp.ui.theme.transparent
 import com.timkwali.shipmentapp.ui.utils.noRippleClickable
@@ -71,14 +74,14 @@ fun TopSection(
                 .size(50.dp)
                 .weight(1f)
             ){
-                Box(modifier = Modifier
-                    .background(Color.White, shape = CircleShape)
-                    .size(40.dp)
-                    .clip(CircleShape),
-                    contentAlignment = Alignment.Center
-                ){
-                    Image(painter = painterResource(id = R.drawable.person), contentDescription = "profile picture")
-                }
+                Image(
+                    painter = painterResource(id = R.drawable.person),
+                    contentDescription = "profile picture",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(40.dp),
+                )
                 Spacer(modifier = Modifier.width(10.dp))
                 Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(40.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -89,11 +92,11 @@ fun TopSection(
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(2.dp))
-                        Text(text = "Your location", style = MaterialTheme.typography.labelSmall.copy(color = Color.White.copy(alpha = 0.6f), fontSize = 14.sp))
+                        Text(text = "Your location", style = MaterialTheme.typography.bodyLarge.copy(color = Color.White.copy(alpha = 0.6f)))
                     }
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "Wertheimer, Illinois", style = MaterialTheme.typography.labelSmall.copy(color = Color.White, fontSize = 18.sp))
+                        Text(text = "Wertheimer, Illinois", style = MaterialTheme.typography.titleMedium.copy(color = Color.White, fontSize = 20.sp))
                         Spacer(modifier = Modifier.size(8.dp))
                         Icon(
                             Icons.Default.KeyboardArrowDown,
@@ -128,9 +131,8 @@ fun SearchArea(onSearchClick: () -> Unit) {
                 Text(
                     text = "Enter the receipt number ...",
                     modifier = Modifier
-                        .padding(start = 10.dp)
                         .background(color = transparent),
-                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp),
+                    style = MaterialTheme.typography.titleMedium.copy(color = grey),
                     overflow = TextOverflow.Ellipsis
                 )
             },

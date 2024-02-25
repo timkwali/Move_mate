@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,19 +34,20 @@ import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.grey
 import com.timkwali.shipmentapp.ui.theme.orange
+import com.timkwali.shipmentapp.ui.theme.proxima
 
 @Composable
 fun TrackingSection(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
     ) {
-        Text(text = "Tracking", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
+        Text(text = "Tracking", style = MaterialTheme.typography.displayLarge)
         Spacer(modifier = Modifier.height(10.dp))
         Column(
             Modifier
                 .fillMaxWidth()
                 .background(color = Color.White, shape = RoundedCornerShape(10.dp))
-                .clip(RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(16.dp))
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             Row(
@@ -53,8 +55,8 @@ fun TrackingSection(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "Shipment Number", style = MaterialTheme.typography.labelSmall.copy(color = Color.Black.copy(alpha = 0.6f), fontSize = 14.sp))
-                    Text(text = "NEJ200089934122231", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold))
+                    Text(text = "Shipment Number", style = MaterialTheme.typography.bodyLarge.copy(color = grey))
+                    Text(text = "NEJ200089934122231", style = MaterialTheme.typography.displayLarge)
                 }
                 Image(painter = painterResource(id = R.drawable.fork_lift), contentDescription = "fork lift icon", modifier = Modifier.size(40.dp))
             }
@@ -72,7 +74,7 @@ fun TrackingSection(modifier: Modifier = Modifier) {
                 .padding(horizontal = 10.dp),
                 trackingType = TrackingType.SENDER,
                 address = "Atlanta, 5243",
-                duration = "2 days -3 days"
+                duration = "2 day -3 days"
             )
             Spacer(modifier = Modifier.height(30.dp))
             TrackingItem(modifier = Modifier
@@ -98,10 +100,11 @@ fun TrackingSection(modifier: Modifier = Modifier) {
                 Icon(
                     Icons.Rounded.Add,
                     contentDescription = "add",
-                    tint = orange
+                    tint = orange,
+                    modifier = Modifier.size(20.dp),
                 )
                 Text(text = "Add Stop",
-                    style = MaterialTheme.typography.bodyLarge.copy(color = orange, fontWeight = FontWeight.Bold)
+                    style = MaterialTheme.typography.titleMedium.copy(color = orange, fontWeight = FontWeight.Bold)
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))

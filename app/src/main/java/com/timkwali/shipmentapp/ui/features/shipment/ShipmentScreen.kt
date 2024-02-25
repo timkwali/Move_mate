@@ -61,6 +61,7 @@ fun ShipmentScreen(
     var animateTopBar by remember { mutableStateOf(false) }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             TitledAppBar(
                 title = "Shipment history",

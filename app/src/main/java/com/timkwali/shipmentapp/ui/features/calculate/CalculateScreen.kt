@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -85,6 +86,7 @@ fun CalculateScreen(
     }
 
     Scaffold(
+        modifier = modifier.fillMaxSize(),
         topBar = {
             TitledAppBar(
                 title = "Calculate",
@@ -156,6 +158,7 @@ fun CalculateBody(
                     modifier = Modifier
                         .shadow(elevation = 7.dp)
                         .clip(RoundedCornerShape(16.dp))
+                        .background(Color.White)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -163,7 +166,7 @@ fun CalculateBody(
                             .clip(RoundedCornerShape(16.dp))
                             .padding(16.dp)
                             .fillMaxWidth()
-                            .background(Color.White)
+//                            .background(Color.White)
                     ) {
                         CustomTextField(
                             textValue = viewModel.senderLocation,

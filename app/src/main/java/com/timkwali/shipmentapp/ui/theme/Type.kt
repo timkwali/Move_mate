@@ -17,25 +17,45 @@ val linikSans = FontFamily(
     Font(R.font.liniksans_thin, FontWeight.Thin)
 )
 
+val proxima = FontFamily(
+    Font(R.font.proxima_nova_soft_medium, FontWeight.Black),
+    Font(R.font.proxima_nova_soft_bold, FontWeight.Bold),
+    Font(R.font.proxima_nova_soft_regular, FontWeight.Normal),
+    Font(R.font.proxima_nova_soft_regular, FontWeight.Light),
+    Font(R.font.proxima_nova_soft_regular, FontWeight.Thin)
+)
+
 val Typography = Typography(
-        bodyLarge = TextStyle(
-                fontFamily = linikSans,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-        ),
-    titleLarge = TextStyle(
-        fontFamily = linikSans,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp
+    displayLarge = TextStyle(
+        fontFamily = proxima,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
     ),
-    labelSmall = TextStyle(
-        fontFamily = linikSans,
-        fontWeight = FontWeight.Light,
-        fontSize = 11.sp,
+    titleLarge = TextStyle(
+        fontFamily = proxima,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+    ),
+    titleMedium = TextStyle(
+        fontFamily = proxima,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = proxima,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
     ),
     bodyMedium = TextStyle(
-        fontFamily = linikSans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp
-    )
+        fontFamily = proxima,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = proxima,
+        fontWeight = FontWeight.Light,
+        fontSize = 10.sp,
+    ),
+
+
 )

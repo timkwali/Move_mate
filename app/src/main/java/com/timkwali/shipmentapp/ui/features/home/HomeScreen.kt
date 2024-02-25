@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -23,10 +24,14 @@ import com.timkwali.shipmentapp.ui.utils.AppBarAnimatedVisibility
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
     Column(
         modifier = modifier
             .background(color = DirtyWhite)
+            .fillMaxSize()
     ) {
         var isContentVisible by remember { mutableStateOf(false) }
         var isAppBarVisible by remember { mutableStateOf(false) }
@@ -41,7 +46,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
 
         var containerState by remember { mutableStateOf(ContainerState.HOME) }
         AnimatedContent(
-            modifier = modifier,
+            modifier = Modifier,
             targetState = containerState,
             label = "container transform",
         ) { state ->
@@ -64,13 +69,6 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
                 )
             }
         }
-
-
-//        AppBarAnimatedVisibility(visibility = isAppBarVisible) {
-//            TopSection(
-//                onSearchClick = { navController.navigate(BottomBarScreen.Search.route) }
-//            )
-//        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
