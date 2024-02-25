@@ -2,6 +2,7 @@ package com.timkwali.shipmentapp.ui.features.calculate
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -49,11 +50,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -62,6 +66,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.timkwali.shipmentapp.BottomBarScreen
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.DarkBlue
+import com.timkwali.shipmentapp.ui.theme.Purple40
 import com.timkwali.shipmentapp.ui.theme.grey
 import com.timkwali.shipmentapp.ui.theme.transparent
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
@@ -70,7 +75,8 @@ import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
 fun CalculateScreen(
     modifier: Modifier = Modifier,
     viewModel: CalculateViewModel = viewModel(),
-    navController: NavController
+    navController: NavController,
+    onBackClick: () -> Unit
 ) {
     var animateTopBar by remember { mutableStateOf(false) }
 
@@ -105,9 +111,21 @@ fun CalculateBody(
     navController: NavController,
     animateWholeBody: Boolean
 ) {
+    val topBarBgHeight: Dp by animateDpAsState(
+        targetValue = if (animateWholeBody) 0.dp else 185.dp,
+        animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing), label = "tabBarYOffset"
+    )
+
     Column(
         Modifier.fillMaxHeight(),
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = MaterialTheme.colorScheme.primary)
+                .height(topBarBgHeight)
+        )
+
         AnimatedVisibility(
             visible = animateWholeBody,
             enter = slideInVertically(
@@ -168,7 +186,9 @@ fun CalculateBody(
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_panel),
                                     contentDescription = "",
-                                    modifier = Modifier.padding(horizontal = 8.dp).rotate(180f),
+                                    modifier = Modifier
+                                        .padding(horizontal = 8.dp)
+                                        .rotate(180f),
                                     tint = Color.Gray
                                 )
                             },

@@ -121,6 +121,8 @@ fun FreightItem(
                         contentDescription = "freight image",
                         modifier = Modifier
                             .fillMaxSize()
+                            .offset(x = 40.dp)
+                            .scale(1.5f)
                     )
                 }
             }

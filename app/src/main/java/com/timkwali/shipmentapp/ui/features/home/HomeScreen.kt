@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.timkwali.shipmentapp.BottomBarScreen
+import com.timkwali.shipmentapp.ui.features.calculate.CalculateScreen
 import com.timkwali.shipmentapp.ui.theme.DirtyWhite
 import com.timkwali.shipmentapp.ui.utils.AppBarAnimatedVisibility
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
@@ -38,22 +39,23 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
             isAppBarVisible = !isAppBarVisible
         }
 
-        var containerState by remember { mutableStateOf(ContainerState.SEARCH) }
+        var containerState by remember { mutableStateOf(ContainerState.HOME) }
         AnimatedContent(
             modifier = modifier,
             targetState = containerState,
             label = "container transform",
         ) { state ->
             when (state) {
-                ContainerState.SEARCH -> AppBarAnimatedVisibility(visibility = isAppBarVisible) {
+                ContainerState.HOME -> AppBarAnimatedVisibility(visibility = isAppBarVisible) {
                     TopSection(
                         onSearchClick = {
                             containerState = ContainerState.HOME
                             navController.navigate(BottomBarScreen.Search.route)
-                         }
+                        }
                     )
                 }
-                ContainerState.HOME -> SearchScreen(
+
+                ContainerState.SEARCH -> SearchScreen(
                     navController = navController,
                     onBack = {
                         containerState = ContainerState.SEARCH
@@ -62,6 +64,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
                 )
             }
         }
+
 
 //        AppBarAnimatedVisibility(visibility = isAppBarVisible) {
 //            TopSection(

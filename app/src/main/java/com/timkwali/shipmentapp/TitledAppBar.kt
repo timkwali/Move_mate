@@ -3,6 +3,7 @@ package com.timkwali.shipmentapp
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -10,7 +11,12 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -27,6 +33,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +42,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.ui.features.shipment.CustomTabRow
+import com.timkwali.shipmentapp.ui.theme.Purple40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,28 +51,18 @@ fun TitledAppBar(
     animateTopBar: Boolean,
     onBackClick: ()-> Unit
 ) {
-    var animateAppBar by remember { mutableStateOf(false) }
-    val appBarHeight: Dp by animateDpAsState(
-        targetValue = if (animateAppBar) 55.dp else 185.dp,
-        animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "appBarHeight"
-    )
-
-    LaunchedEffect(key1 = "") {
-        animateAppBar = true
-    }
 
     CenterAlignedTopAppBar(
-//        modifier = Modifier.height(appBarHeight),
         title = {
         AnimatedVisibility(
             visible = animateTopBar,
             enter = slideInVertically(
                 initialOffsetY = { h -> h },
-                animationSpec = tween(durationMillis = 500)
+                animationSpec = tween(durationMillis = 1000)
             ) + fadeIn(
-                tween(500),
+                tween(1000),
             ),
-            exit = slideOutVertically(tween(durationMillis = 500)) + fadeOut(tween(500))
+            exit = slideOutVertically(tween(durationMillis = 1000)) + fadeOut(tween(1000))
         ) {
             Text(
                 text = title,
@@ -76,11 +75,11 @@ fun TitledAppBar(
             visible = animateTopBar,
             enter = slideInHorizontally(
                 initialOffsetX = { w -> -w },
-                animationSpec = tween(durationMillis = 500)
+                animationSpec = tween(durationMillis = 1000)
             ) + fadeIn(
-                tween(500),
+                tween(1000),
             ),
-            exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
+            exit = slideOutHorizontally(tween(durationMillis = 1000)) + fadeOut(tween(1000))
         ) {
             IconButton(onClick = onBackClick) {
                 Icon(

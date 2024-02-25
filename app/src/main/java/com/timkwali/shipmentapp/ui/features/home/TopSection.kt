@@ -77,7 +77,7 @@ fun TopSection(
                     .clip(CircleShape),
                     contentAlignment = Alignment.Center
                 ){
-                    Image(painter = painterResource(id = R.drawable.person), contentDescription = "notification icon")
+                    Image(painter = painterResource(id = R.drawable.person), contentDescription = "profile picture")
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(40.dp)) {
@@ -121,35 +121,6 @@ fun TopSection(
 
 @Composable
 fun SearchArea(onSearchClick: () -> Unit) {
-//    Row(
-//        modifier = Modifier
-//            .background(color = Color.White, shape = RoundedCornerShape(30.dp))
-//            .fillMaxWidth()
-//            .height(56.dp)
-//            .clip(RoundedCornerShape(30.dp))
-//            .noRippleClickable { onSearchClick() },
-//        verticalAlignment = Alignment.CenterVertically,
-//    ) {
-//        Spacer(modifier = Modifier.width(15.dp))
-////        Icon(imageVector = Icons.Outlined.Search, tint = MaterialTheme.colorScheme.primary, contentDescription = "search icon", modifier = Modifier.size(20.dp))
-//        Icon(Icons.Outlined.Search, contentDescription = "Search")
-//        Text(
-//            text = "Enter the receipt number ...",
-//            modifier = Modifier
-//                .padding(start = 10.dp)
-//                .weight(1f)
-//                .background(color = transparent),
-//            style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp)
-//        )
-//        Box(modifier = Modifier
-//            .background(orange, shape = CircleShape)
-//            .size(40.dp)
-//            .clip(CircleShape),
-//            contentAlignment = Alignment.Center
-//        ) {
-//            Icon(painter = painterResource(id = R.drawable.ic_flip), contentDescription = "flip", tint = Color.White, modifier = Modifier.rotate(90f))
-//        }
-//        Spacer(modifier = Modifier.width(5.dp))
         TextField(
             enabled = false,
             value = "", onValueChange = {},

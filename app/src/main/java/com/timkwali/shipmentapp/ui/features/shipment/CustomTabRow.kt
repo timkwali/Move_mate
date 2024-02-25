@@ -23,12 +23,14 @@ import com.timkwali.shipmentapp.ui.theme.orange
 import com.timkwali.shipmentapp.ui.utils.bounceClick
 
 @Composable
-fun CustomTabRow(selectedId: MutableIntState) {
+fun CustomTabRow(selectedId: MutableIntState, modifier: Modifier = Modifier) {
     ScrollableTabRow(
+        modifier = modifier,
         selectedTabIndex = selectedId.intValue,
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = Color.White,
         edgePadding = 12.dp,
+        divider = {},
         indicator = { tabPositions ->
             if (selectedId.intValue < tabPositions.size) {
                 TabRowDefaults.Indicator(

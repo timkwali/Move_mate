@@ -3,8 +3,10 @@ package com.timkwali.shipmentapp.ui.features.home
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -116,7 +118,7 @@ private fun AppBar(
 ) {
     var animateAppBar by remember { mutableStateOf(false) }
     val appBarHeight: Dp by animateDpAsState(
-        targetValue = if (animateAppBar) 55.dp else 185.dp,
+        targetValue = if (animateAppBar) 55.dp else 180.dp,
         animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "appBarHeight"
     )
     val searchBarPosition by animateDpAsState(

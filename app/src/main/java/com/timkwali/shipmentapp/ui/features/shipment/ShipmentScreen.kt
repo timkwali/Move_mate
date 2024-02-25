@@ -2,6 +2,7 @@ package com.timkwali.shipmentapp.ui.features.shipment
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,12 +13,15 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -82,6 +87,14 @@ fun ShipmentList(
     var isContentVisible by remember { mutableStateOf(false) }
     var isCustomRowVisible by remember { mutableStateOf(false) }
     var isWholeContentVisible by remember { mutableStateOf(false) }
+    val tabBarYOffset: Dp by animateDpAsState(
+        targetValue = if (isWholeContentVisible) 0.dp else (-30).dp,
+        animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing), label = "tabBarYOffset"
+    )
+    val topBarBgHeight: Dp by animateDpAsState(
+        targetValue = if (isWholeContentVisible) 36.dp else 185.dp,
+        animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing), label = "tabBarYOffset"
+    )
 
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -112,22 +125,27 @@ fun ShipmentList(
             top = paddingValues.calculateTopPadding()
         )
     ) {
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = MaterialTheme.colorScheme.primary)
+                .height(topBarBgHeight)
         ) {
-            AnimatedVisibility(
-                visible = isCustomRowVisible,
-                enter = slideInHorizontally(
-                    initialOffsetX = { w -> w },
-                    animationSpec = tween(durationMillis = 500)
-                ) + fadeIn(
-                    tween(500),
-                ),
-                exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
-            ) {
-                CustomTabRow(selectedId)
+            Row() {
+                AnimatedVisibility(
+                    visible = isCustomRowVisible,
+                    enter = slideInHorizontally(
+                        initialOffsetX = { w -> w },
+                        animationSpec = tween(durationMillis = 1000)
+                    ) + fadeIn(
+                        tween(1000),
+                    ),
+                    exit = slideOutHorizontally(tween(durationMillis = 1000)) + fadeOut(tween(1000))
+                ) {
+                    CustomTabRow(selectedId, modifier = Modifier
+                    .offset(y = tabBarYOffset)
+                    )
+                }
             }
         }
 
