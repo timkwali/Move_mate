@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,21 +40,21 @@ fun ShipmentStatusItem(item: ShipmentStatus) {
             .padding(12.dp)
     ) {
         Row(
-            verticalAlignment = Alignment.Bottom,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(20.dp))
                 .background(color = Color.Gray.copy(0.1f))
                 .padding(horizontal = 16.dp, vertical = 4.dp)
         ) {
             Icon(
-                imageVector = item.status.icon,
+                painter = painterResource(id = item.status.icon),
                 tint = item.status.color,
                 contentDescription = item.status.tag,
                 modifier = Modifier.size(16.dp)
             )
             Spacer(modifier = Modifier.size(4.dp))
             Text(
-                text = item.status.tag, fontSize = 12.sp, color = item.status.color,
+                text = item.status.tag, color = item.status.color, style = typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
         }
         Row {
@@ -78,7 +79,7 @@ fun ShipmentStatusItem(item: ShipmentStatus) {
                     Box(
                         modifier = Modifier
                             .padding(6.dp)
-                            .size(8.dp)
+                            .size(5.dp)
                             .clip(shape = CircleShape)
                             .background(color = Color.Gray.copy(0.5f)),
                     )
