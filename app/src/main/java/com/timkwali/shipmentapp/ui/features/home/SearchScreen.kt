@@ -3,17 +3,14 @@ package com.timkwali.shipmentapp.ui.features.home
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,11 +60,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.timkwali.shipmentapp.R
@@ -126,15 +121,15 @@ private fun AppBar(
 ) {
     var animateAppBar by remember { mutableStateOf(false) }
     val appBarHeight: Dp by animateDpAsState(
-        targetValue = if (animateAppBar) 55.dp else 180.dp,
+        targetValue = if (animateAppBar) 55.dp else 120.dp,
         animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "appBarHeight"
     )
     val searchBarPosition by animateDpAsState(
-        targetValue = if(animateAppBar) 0.dp else 65.dp,
+        targetValue = if(animateAppBar) 0.dp else 60.dp,
         animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "searchBarPosition"
     )
-    val searchBaraddingStart by animateDpAsState(
-        targetValue = if(animateAppBar) 10.dp else 20.dp,
+    val searchBarPaddingStart by animateDpAsState(
+        targetValue = if(animateAppBar) 50.dp else 20.dp,
         animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "paddingStart"
     )
 
@@ -142,15 +137,14 @@ private fun AppBar(
         animateAppBar = true
     }
     Column {
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(end = 12.dp, top = 16.dp, bottom = 20.dp)
                 .height(appBarHeight),
-            verticalAlignment = Alignment.CenterVertically,
-
-            ) {
+            contentAlignment = Alignment.TopStart
+        ) {
             androidx.compose.animation.AnimatedVisibility(
                 visible = animateTopBar,
                 enter = slideInHorizontally(
@@ -161,7 +155,7 @@ private fun AppBar(
                 ),
                 exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
             ) {
-                IconButton(onClick = onClick, modifier = Modifier.size(36.dp)) {
+                IconButton(onClick = onClick, modifier = Modifier.size(36.dp).padding(top = 20.dp)) {
                     Icon(Icons.Default.KeyboardArrowLeft, tint = Color.White, contentDescription = null)
                 }
             }
@@ -172,14 +166,14 @@ private fun AppBar(
                     Text(
                         text = "Enter the receipt number ...",
                         modifier = Modifier
-                            .weight(1f)
+//                            .weight(1f)
                             .background(color = transparent),
-                        style = MaterialTheme.typography.titleMedium.copy(color = grey),
+                        style = typography.titleMedium.copy(color = grey),
                         overflow = TextOverflow.Ellipsis
                     )
                 },
                 modifier = Modifier
-                    .padding(end = 8.dp, start = searchBaraddingStart)
+                    .padding(end = 8.dp, start = searchBarPaddingStart)
                     .fillMaxWidth()
                     .height(56.dp)
                     .offset(y = searchBarPosition)
@@ -296,10 +290,11 @@ fun ListItem(
                 .size(35.dp),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.box),
-                modifier = Modifier.size(40.dp),
-                contentDescription = null
+            Icon(
+                painter = painterResource(id = R.drawable.box2),
+                modifier = Modifier.size(20.dp),
+                contentDescription = null,
+                tint = Color.White
             )
         }
         Spacer(modifier = Modifier.size(12.dp))

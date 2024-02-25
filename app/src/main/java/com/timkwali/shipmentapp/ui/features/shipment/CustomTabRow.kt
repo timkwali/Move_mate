@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.data.listOfShipmentStatus
 import com.timkwali.shipmentapp.ui.theme.DimOrange
 import com.timkwali.shipmentapp.ui.theme.orange
+import com.timkwali.shipmentapp.ui.theme.proxima
 import com.timkwali.shipmentapp.ui.utils.bounceClick
 
 @Composable
@@ -53,7 +55,9 @@ fun CustomTabRow(selectedId: MutableIntState, modifier: Modifier = Modifier) {
                     Text(
                         text = status.title,
                         color = if (isSelected) Color.White else Color.White.copy(0.6f),
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = 8.dp),
+                        fontFamily = proxima,
+                        fontSize = 18.sp
                     )
                     Box(
                         modifier = Modifier

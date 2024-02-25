@@ -66,6 +66,7 @@ fun TopSection(
             .background(MaterialTheme.colorScheme.primary)
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 20.dp)
+            .height(120.dp)
     ) {
         Row(
             modifier = Modifier,

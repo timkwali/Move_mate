@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,6 +47,7 @@ import androidx.navigation.NavHostController
 import com.timkwali.shipmentapp.BottomBarScreen
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.DimOrange
+import com.timkwali.shipmentapp.ui.theme.proxima
 import kotlinx.coroutines.delay
 
 
@@ -60,13 +62,13 @@ fun CostEstimateScreen(navController: NavHostController) {
         animationSpec = tween(durationMillis = 2500)
     )
     val boxScale by animateFloatAsState(
-        targetValue = if(scaleBox) 2f else 0f,
+        targetValue = if(scaleBox) 1.7f else 0f,
         label = "boxScale",
         animationSpec = tween(200, easing = LinearOutSlowInEasing)
     )
     LaunchedEffect("cost") {
         isContentVisible = true
-        cost = 1460
+        cost = 1423
         delay(300)
         scaleBox = true
     }
@@ -98,40 +100,44 @@ fun CostEstimateScreen(navController: NavHostController) {
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
                     fontSize = 32.sp,
-                    fontStyle = FontStyle.Italic
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = proxima
                 )
+                Spacer(modifier = Modifier.width(10.dp))
                 Icon(
-                    Icons.Default.ShoppingCart,
+                    painter = painterResource(id = R.drawable.fastcar),
                     modifier = Modifier.size(36.dp),
                     tint = DimOrange,
                     contentDescription = null
                 )
             }
-            Spacer(modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.size(60.dp))
             Image(
                 painter = painterResource(id = R.drawable.box),
                 contentDescription = null,
                 modifier = Modifier
-                    .height(250.dp)
-                    .width(150.dp)
+                    .height(220.dp)
+                    .width(120.dp)
                     .scale(boxScale)
             )
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.size(40.dp))
             Text(
                 text = "Total Estimated Amount",
                 fontWeight = FontWeight.W400,
                 fontSize = 30.sp,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.padding(horizontal = 20.dp),
             )
 
             Spacer(modifier = Modifier.size(12.dp))
             Text(text = "$$animatedCost USD", fontSize = 30.sp, color = Green)
             Spacer(modifier = Modifier.size(12.dp))
             Text(
-                text = "The amount is estimated this will vary if you change your location or weight",
-                fontSize = 18.sp, color = Color.Gray,
+                text = "This amount is estimated this will vary if you change your location or weight",
+                fontSize = 20.sp, color = Color.Gray,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.padding(horizontal = 20.dp),
+                fontFamily = proxima,
+
             )
             Spacer(modifier = Modifier.size(24.dp))
             ActionButton("Back to home") {

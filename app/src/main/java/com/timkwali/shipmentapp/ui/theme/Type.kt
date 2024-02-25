@@ -9,14 +9,6 @@ import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.R
 
 // Set of Material typography styles to start with
-val linikSans = FontFamily(
-    Font(R.font.liniksans_black, FontWeight.Black),
-    Font(R.font.liniksans_bold, FontWeight.Bold),
-    Font(R.font.liniksans_regular, FontWeight.Normal),
-    Font(R.font.liniksans_light, FontWeight.Light),
-    Font(R.font.liniksans_thin, FontWeight.Thin)
-)
-
 val proxima = FontFamily(
     Font(R.font.proxima_nova_soft_medium, FontWeight.Black),
     Font(R.font.proxima_nova_soft_bold, FontWeight.Bold),
