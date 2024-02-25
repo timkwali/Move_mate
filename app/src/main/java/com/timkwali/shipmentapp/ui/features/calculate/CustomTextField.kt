@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -62,15 +63,16 @@ fun CustomTextField(
                 unfocusedContainerColor = backgroundColor,
                 focusedContainerColor = backgroundColor,
                 errorContainerColor = backgroundColor,
-                focusedTextColor = DarkBlue,
+                focusedTextColor = Color.Black,
                 unfocusedTextColor = DarkBlue,
                 errorTextColor = DarkBlue,
                 unfocusedPlaceholderColor = Color.Gray.copy(0.8f),
                 focusedPlaceholderColor = Color.Gray.copy(0.8f),
             ),
-            placeholder = { Text(placeHolder) },
+            placeholder = { Text(placeHolder, style = typography.titleLarge.copy(fontWeight = FontWeight.Medium)) },
             modifier = Modifier.fillMaxWidth(),
-            trailingIcon = trailingIcon
+            trailingIcon = trailingIcon,
+            textStyle = typography.titleLarge.copy(fontWeight = FontWeight.Medium)
         )
     }
 }

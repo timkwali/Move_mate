@@ -1,5 +1,6 @@
 package com.timkwali.shipmentapp.ui.features.calculate
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.timkwali.shipmentapp.ui.theme.DirtyWhite
 import com.timkwali.shipmentapp.ui.theme.NavyBlue
 import com.timkwali.shipmentapp.ui.utils.bounceClick
 
@@ -42,17 +44,20 @@ fun FilterChipGroup(
             FilterChip(
                 modifier = Modifier
                     .padding(end = 6.dp)
-                    .bounceClick(),
+                    .bounceClick().
+                background(DirtyWhite),
                 selected = if (defaultSelectedItemIndex == -1) false else isSelected,
                 onClick = {
                     selectedItemIndex = index
                     onSelectedChanged(index)
                 },
-                label = { Text(item, color = if (isSelected) Color.White else NavyBlue,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.W600, fontSize = 16.sp
+                label = {
+                    Text(
+                        item,
+                        color = if (isSelected) Color.White else NavyBlue,
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                     )
-                ) },
+                },
                 leadingIcon = if (isSelected) {
                     {
                         Icon(
@@ -64,7 +69,7 @@ fun FilterChipGroup(
                     }
                 } else null,
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = if (isSelected) NavyBlue else MaterialTheme.colorScheme.background
+                    containerColor = if (isSelected) NavyBlue else DirtyWhite
                 )
             )
         }

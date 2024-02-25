@@ -37,6 +37,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -51,6 +52,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
@@ -67,6 +69,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.timkwali.shipmentapp.BottomBarScreen
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.DarkBlue
+import com.timkwali.shipmentapp.ui.theme.DirtyWhite
 import com.timkwali.shipmentapp.ui.theme.Purple40
 import com.timkwali.shipmentapp.ui.theme.grey
 import com.timkwali.shipmentapp.ui.theme.transparent
@@ -86,7 +89,9 @@ fun CalculateScreen(
     }
 
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(DirtyWhite),
         topBar = {
             TitledAppBar(
                 title = "Calculate",
@@ -119,7 +124,8 @@ fun CalculateBody(
     )
 
     Column(
-        Modifier.fillMaxHeight(),
+        Modifier.fillMaxHeight()
+            .background(DirtyWhite),
     ) {
         Box(
             modifier = Modifier
@@ -151,12 +157,12 @@ fun CalculateBody(
                     .padding(16.dp)
                     .weight(1f)
             ) {
-                Text(text = "Destination", style = MaterialTheme.typography.titleLarge)
+                Text(text = "Destination", style = typography.titleLarge)
                 Spacer(modifier = Modifier.size(12.dp))
                 // Add Card with 3 entries
-                Surface(
+                Box(
                     modifier = Modifier
-                        .shadow(elevation = 7.dp)
+                        .shadow(elevation = 5.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color.White)
                 ) {
@@ -213,12 +219,13 @@ fun CalculateBody(
                     }
                 }
                 Spacer(modifier = Modifier.size(16.dp))
-                Text(text = "Packaging", style = MaterialTheme.typography.titleLarge)
-                Text(text = "What are you sending?", color = Color.Gray)
+                Text(text = "Packaging", style = typography.titleLarge)
+                Text(text = "What are you sending?", color = Color.Gray, style = typography.titleLarge.copy(fontWeight = FontWeight.Medium))
                 Spacer(modifier = Modifier.size(8.dp))
                 Surface(
                     modifier = Modifier
-                        .shadow(elevation = 7.dp)
+                        .shadow(elevation = 5.dp)
+                        .clipToBounds()
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color.White)
                 ) {
@@ -257,8 +264,8 @@ fun CalculateBody(
                 }
                 // Drop down panel
                 Spacer(modifier = Modifier.size(16.dp))
-                Text(text = "Categories", style = MaterialTheme.typography.titleLarge)
-                Text(text = "What are you sending?", color = Color.Gray)
+                Text(text = "Categories", style = typography.titleLarge)
+                Text(text = "What are you sending?", color = Color.Gray, style = typography.titleLarge.copy(fontWeight = FontWeight.Medium))
             }
         }
 

@@ -2,6 +2,7 @@ package com.timkwali.shipmentapp.ui.features.calculate
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -14,8 +15,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
@@ -30,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.res.painterResource
@@ -42,30 +46,39 @@ import androidx.navigation.NavHostController
 import com.timkwali.shipmentapp.BottomBarScreen
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.DimOrange
+import kotlinx.coroutines.delay
 
 
 @Composable
 fun CostEstimateScreen(navController: NavHostController) {
     var cost by remember { mutableIntStateOf(0) }
     var isContentVisible by remember { mutableStateOf(false) }
+    var scaleBox by remember { mutableStateOf(false) }
     val animatedCost by animateIntAsState(
         targetValue = cost,
         label = "cost",
         animationSpec = tween(durationMillis = 2500)
     )
+    val boxScale by animateFloatAsState(
+        targetValue = if(scaleBox) 2f else 0f,
+        label = "boxScale",
+        animationSpec = tween(200, easing = LinearOutSlowInEasing)
+    )
     LaunchedEffect("cost") {
         isContentVisible = true
         cost = 1460
+        delay(300)
+        scaleBox = true
     }
 
 
     AnimatedVisibility(
         visible = isContentVisible, enter = slideInVertically(
             initialOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 2000, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 200, easing = LinearOutSlowInEasing)
         ) + fadeIn(
             initialAlpha = 0f,
-            animationSpec = tween(durationMillis = 2000, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 200, easing = LinearOutSlowInEasing)
         )
     ) {
         Column(
@@ -94,9 +107,16 @@ fun CostEstimateScreen(navController: NavHostController) {
                     contentDescription = null
                 )
             }
-            Spacer(modifier = Modifier.size(24.dp))
-            Image(painter = painterResource(id = R.drawable.box), contentDescription = null)
-            Spacer(modifier = Modifier.size(24.dp))
+            Spacer(modifier = Modifier.size(20.dp))
+            Image(
+                painter = painterResource(id = R.drawable.box),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(250.dp)
+                    .width(150.dp)
+                    .scale(boxScale)
+            )
+            Spacer(modifier = Modifier.size(10.dp))
             Text(
                 text = "Total Estimated Amount",
                 fontWeight = FontWeight.W400,
@@ -122,5 +142,4 @@ fun CostEstimateScreen(navController: NavHostController) {
             }
         }
     }
-
 }

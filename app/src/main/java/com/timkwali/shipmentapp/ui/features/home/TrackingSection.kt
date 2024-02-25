@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,9 +47,12 @@ fun TrackingSection(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(10.dp))
         Column(
             Modifier
-                .fillMaxWidth()
-                .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+                .shadow(elevation = 5.dp)
+                .clipToBounds()
                 .clip(RoundedCornerShape(16.dp))
+                .background(Color.White)
+                .fillMaxWidth()
+                .background(color = Color.White)
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             Row(

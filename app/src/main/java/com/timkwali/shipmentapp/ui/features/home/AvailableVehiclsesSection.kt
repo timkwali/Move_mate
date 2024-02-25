@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.timkwali.shipmentapp.R
 import com.timkwali.shipmentapp.ui.theme.grey
+import com.timkwali.shipmentapp.ui.theme.transparent
 import com.timkwali.shipmentapp.ui.utils.AnimatedVisibility
 import com.timkwali.shipmentapp.ui.utils.ContentAnimatedVisibility
 import com.timkwali.shipmentapp.ui.utils.VehicleCardVisibility
@@ -108,17 +109,20 @@ fun FreightItem(
 ) {
     Column(
         modifier = modifier
+            .shadow(5.dp)
             .width(140.dp)
+            .height(180.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+            .clipToBounds()
+            .background(color = Color.White)
     ) {
         Text(modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp), text = name, style = MaterialTheme.typography.titleMedium.copy(color = Color.Black, fontWeight = FontWeight.W600), overflow = TextOverflow.Ellipsis, maxLines = 1)
         Text(modifier = Modifier.padding(horizontal = 10.dp), text = status, style = MaterialTheme.typography.labelSmall.copy(color = grey, fontSize = 16.sp), overflow = TextOverflow.Ellipsis, maxLines = 1)
         Box(
             Modifier
-                .height(150.dp)
-                .width(150.dp)
                 .clipToBounds()
+                .clip(RoundedCornerShape(16.dp))
+                .background(color = transparent)
         ) {
             AnimatedVisibility(isListVisible = isListVisible) {
                 Image(
@@ -128,6 +132,7 @@ fun FreightItem(
                         .fillMaxSize()
                         .offset(x = 40.dp)
                         .scale(1.2f)
+                        .background(transparent)
                 )
             }
         }
