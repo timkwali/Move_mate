@@ -155,7 +155,7 @@ private fun AppBar(
                 ),
                 exit = slideOutHorizontally(tween(durationMillis = 500)) + fadeOut(tween(500))
             ) {
-                IconButton(onClick = onClick, modifier = Modifier.size(36.dp).padding(top = 20.dp)) {
+                IconButton(onClick = onClick, modifier = Modifier.size(50.dp).padding(top = 10.dp)) {
                     Icon(Icons.Default.KeyboardArrowLeft, tint = Color.White, contentDescription = null)
                 }
             }

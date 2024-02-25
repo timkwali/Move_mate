@@ -94,7 +94,7 @@ fun ShipmentList(
     )
     val topBarBgHeight: Dp by animateDpAsState(
         targetValue = if (isWholeContentVisible) 36.dp else 100.dp,
-        animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "tabBarYOffset"
+        animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing), label = "topBarBgHeight"
     )
 
     val pagerState = rememberPagerState(
